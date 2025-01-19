@@ -4,13 +4,10 @@ node {
             sh 'mvn -B -DskipTests clean package'
         }
         stage('Test') {
-            steps {
+            try {
                 sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
+            } finally {
+                junit 'target/surefire-reports/*.xml'
             }
         }
     }
